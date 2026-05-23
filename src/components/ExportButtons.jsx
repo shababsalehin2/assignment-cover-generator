@@ -71,7 +71,7 @@ export default function ExportButtons({
         {isPdfLoading ? 'Processing...' : 'Download PDF'}
       </button>
 
-      <button
+      {/* <button
         type="button"
         disabled={isPdfLoading || isDocxLoading}
         onClick={handleDOCXExport}
@@ -79,7 +79,7 @@ export default function ExportButtons({
       >
         <FileCode className="w-5 h-5" />
         {isDocxLoading ? 'Processing...' : 'Download Word (DOCX)'}
-      </button>
+      </button> */}
     </div>
   );
 }
