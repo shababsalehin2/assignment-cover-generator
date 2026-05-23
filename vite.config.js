@@ -1,29 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Optimized configuration for Vite 8 & Vercel
 export default defineConfig({
   plugins: [react()],
-  base: '/', 
+  base: '/',
   build: {
     outDir: 'dist',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        // FIXED: Rewritten from an Object to a Function for Vite 8 / Rolldown compatibility
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'vendor';
-            }
-            if (id.includes('jspdf') || id.includes('html2canvas')) {
-              return 'pdf';
-            }
-            if (id.includes('docx') || id.includes('file-saver')) {
-              return 'docx';
-            }
-          }
-        }
-      }
-    }
+    sourcemap: false
+    // Removed the manualChunks block entirely to let Rolldown handle chunking automatically
   }
 })
