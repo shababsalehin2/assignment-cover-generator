@@ -1,22 +1,27 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
-// Change 'base' to your GitHub repo name for GitHub Pages deployment
-// e.g., base: '/assignment-cover-generator/'
 export default defineConfig({
   plugins: [react()],
-  // base: '/assignment-cover-generator/',
-    base: '/',
+  base: '/', 
   build: {
     outDir: 'dist',
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          pdf: ['jspdf', 'html2canvas'],
-          docx: ['docx', 'file-saver'],
+        // FIXED: Rewritten from an Object to a Function for Vite 8 / Rolldown compatibility
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'vendor';
+            }
+            if (id.includes('jspdf') || id.includes('html2canvas')) {
+              return 'pdf';
+            }
+            if (id.includes('docx') || id.includes('file-saver')) {
+              return 'docx';
+            }
+          }
         }
       }
     }
